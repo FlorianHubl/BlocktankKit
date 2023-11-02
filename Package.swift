@@ -4,20 +4,20 @@
 import PackageDescription
 
 let package = Package(
-    name: "Blocktankkit",
+    name: "BlocktankKit",
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "Blocktankkit",
-            targets: ["Blocktankkit"]),
+            name: "BlocktankKit",
+            targets: ["BlocktankKit"]),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "Blocktankkit"),
+            name: "BlocktankKit"),
         .testTarget(
-            name: "BlocktankkitTests",
-            dependencies: ["Blocktankkit"]),
+            name: "BlocktankKitTests",
+            dependencies: ["BlocktankKit"]),
     ]
 )
