@@ -2,8 +2,8 @@
 import Foundation
 
 public struct Channel: Codable {
-    let order_id, ln_invoice: String
-    let total_amount: Int
-    let btc_address: String
-    let lnurl_channel: String
+    public let order_id, ln_invoice: String
+    public let total_amount: Int
+    public let btc_address: String
+    public let lnurl_channel: String
 }
