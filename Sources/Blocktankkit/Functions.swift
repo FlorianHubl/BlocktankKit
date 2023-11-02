@@ -22,8 +22,8 @@ extension Blocktank {
     ///   - localBalance: The amount of sats you want on the your side. The outbound liquidity. The amount of sats you can send on this channel.
     ///   - weeks: How many weeks the channel will be open.
     /// - Returns: Purchase Information.
-    public func purchaseChannel(remoteBalance: Int, localBalance: Int, weeks: Int) async throws -> Channel {
-        let payload = "{\"remote_balance\": \(remoteBalance),\"local_balance\": \(localBalance),\"channel_expiry\": \(weeks)}"
+    public func purchaseChannel(remoteBalance: Int, localBalance: Int, weeks: Int, productID: String) async throws -> Channel {
+        let payload = "{\"remote_balance\": \(remoteBalance),\"local_balance\": \(localBalance),\"channel_expiry\": \(weeks), \"product_id\": \"\(productID)\"}"
         return try await request(for: .buyChannel, method: .post, type: Channel.self, payload: payload)
     }
     
