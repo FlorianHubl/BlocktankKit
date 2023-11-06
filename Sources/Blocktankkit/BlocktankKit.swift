@@ -59,29 +59,29 @@ public struct Blocktank {
     }
     
     func request(for req: Request, method: HTTPMethod, payload: String? = nil) async throws {
-        let _ = try await URLSession.shared.data(for: getRequest(for: req, method: method, payLoad: payload))
-//        do {
-//            return
-//        }catch {
-//            do {
-//                let a = try JSONDecoder().decode(DizzyError.self, from: result)
-//                throw BlocktankError.error(a.error)
-//            }catch {
-//                guard let a = String(data: result, encoding: .utf8) else {throw BlocktankError.error("BoltzKit Unknown Error")}
-//                throw BlocktankError.error(a)
-//            }
-//        }
+        let result = try await URLSession.shared.data(for: getRequest(for: req, method: method, payLoad: payload)).0
+        if debugMode {
+            print(String(data: result, encoding: .utf8)!)
+        }
+        do {
+            let a = try JSONDecoder().decode(BTError.self, from: result)
+            throw BlocktankError.error(a.error)
+        }catch {
+            return
+        }
     }
     
     func request<T: Codable>(for req: Request, method: HTTPMethod, type: T.Type, payload: String? = nil, urlExtention: String? = nil) async throws -> T {
         let result = try await URLSession.shared.data(for: getRequest(for: req, method: method, urlExtention: urlExtention, payLoad: payload)).0
         do {
-            print(String(data: result, encoding: .utf8)!)
+            if debugMode {
+                print(String(data: result, encoding: .utf8)!)
+            }
             let a = try JSONDecoder().decode(type.self, from: result)
             return a
         }catch {
             do {
-                let a = try JSONDecoder().decode(DizzyError.self, from: result)
+                let a = try JSONDecoder().decode(BTError.self, from: result)
                 throw BlocktankError.error(a.error)
             }catch {
                 guard let a = String(data: result, encoding: .utf8) else {throw BlocktankError.error("BoltzKit Unknown Error")}
@@ -100,7 +100,7 @@ extension String {
     }
 }
 
-public struct DizzyError: Codable {
+public struct BTError: Codable {
     public let error: String
 }
 
